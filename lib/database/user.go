@@ -18,7 +18,7 @@ func GetUser(id int) (interface{}, error) {
 	return user, nil
 }
 
-func GetUserByEmail(username string) (int64, error) {
+func GetUserByUsername(username string) (int64, error) {
 	tx := config.DB.Where("username = ?", username).First(&user)
 	if tx.Error != nil {
 		return 0, tx.Error
@@ -44,29 +44,29 @@ func DeleteUser(id int) (interface{}, error) {
 	return user, nil
 }
 
-func UpdateUser(id int, User models.Users) (models.Users, error) {
-	var user models.Users
+// func UpdateUser(id int, User models.Users) (models.Users, error) {
+// 	var user models.Users
 
-	if err := config.DB.First(&user, id).Error; err != nil {
-		return user, err
-	}
+// 	if err := config.DB.First(&user, id).Error; err != nil {
+// 		return user, err
+// 	}
 
-	user.User_Name = User.User_Name
-	user.Email = User.Email
-	user.Password = User.Password
-	user.Phone_Number = User.Phone_Number
-	user.Gender = User.Gender
+// 	user.User_Name = User.User_Name
+// 	user.Email = User.Email
+// 	user.Password = User.Password
+// 	user.Phone_Number = User.Phone_Number
+// 	user.Gender = User.Gender
 
-	if err := config.DB.Save(&user).Error; err != nil {
-		return user, err
-	}
-	return user, nil
-}
+// 	if err := config.DB.Save(&user).Error; err != nil {
+// 		return user, err
+// 	}
+// 	return user, nil
+// }
 
 func LoginUsers(user *models.UserLogin) (*models.Users, error) {
 	var err error
 	userpassword := models.Users{}
-	if err = config.DB.Where("email = ?", user.Email).First(&userpassword).Error; err != nil {
+	if err = config.DB.Where("username = ?", user.Username).First(&userpassword).Error; err != nil {
 		return nil, err
 	}
 	check := CheckPasswordHash(user.Password, userpassword.Password)

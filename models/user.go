@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"gorm.io/gorm"
@@ -6,7 +6,7 @@ import (
 
 type Users struct {
 	gorm.Model
-	FullName string `gorm:"type:varchar(255)" json:"full_name" form:"full_name"`
+	FullName string `gorm:"type:varchar(255)" json:"fullname" form:"fullname"`
 	Username string `gorm:"type:varchar(100);unique;not null" json:"username" form:"username"`
 	Password string `gorm:"type:varchar(255);not null" json:"password" form:"password"`
 	Token    string `json:"token" form:"token"`

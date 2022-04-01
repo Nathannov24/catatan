@@ -1,16 +1,23 @@
 package controllers
 
-import "net/http"
+import (
+	"net/http"
+	"transaksi/lib/database"
+	responses "transaksi/lib/response"
+	"transaksi/models"
+
+	"github.com/labstack/echo/v4"
+)
 
 var user models.Users
 
 //register user
 func RegisterUsersController(c echo.Context) error {
 	c.Bind(&user)
-	duplicate, _ := database.GetUserByEmail(user.Email)
+	duplicate, _ := database.GetUserByUsername(user.Username)
 	if duplicate > 0 {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Email was used, try another email",
+			"message": "Username was used, try another username",
 		})
 	}
 
@@ -22,7 +29,6 @@ func RegisterUsersController(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, responses.StatusFailed)
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "success",
-	})
+	return c.JSON(http.StatusCreated, responses.StatusSuccessRegister(user.Username))
+
 }

@@ -1,9 +1,9 @@
 package config
 
 import (
-	"alta-wedding/models"
 	"fmt"
 	"log"
+	"transaksi/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -42,11 +42,5 @@ func InitDB() {
 
 // Function Initial Migration (Tabel)
 func InitalMigration() {
-	DB.AutoMigrate(&models.User{})
-	DB.AutoMigrate(&models.Organizer{})
-	DB.AutoMigrate(&models.Package{})
-	DB.AutoMigrate(&models.Photo{})
-	DB.AutoMigrate(&models.Reservation{})
-	DB.AutoMigrate(&models.Payment{})
-	DB.AutoMigrate(&models.City{})
+	DB.AutoMigrate(&models.Users{})
 }
